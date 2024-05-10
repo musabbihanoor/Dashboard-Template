@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import IconButton from "@mui/material/IconButton";
+
+// import Menu from "@mui/material/Menu";
+// import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
 import { data } from "../data/sidebar";
 
 import { MdOutlineDashboard } from "react-icons/md";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
-const drawerWidth = 230;
+const drawerWidth = 270;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -73,7 +69,6 @@ const Drawer = styled(MuiDrawer, {
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(true);
-  const [active, setActive] = useState("Dashboard");
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -87,7 +82,7 @@ export const Sidebar = () => {
         </IconButton>
         {open && (
           <>
-            <h1 className="text-2xl flex-1">IntelliSuite</h1>
+            <h1 className="text-2xl flex-1">Template</h1>
             <IconButton onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
@@ -96,7 +91,13 @@ export const Sidebar = () => {
       </DrawerHeader>
       <List>
         {data.map((item, i) => (
-          <Item key={i} item={item} />
+          <Item
+            key={i}
+            item={item}
+            open={open}
+            level={0}
+            handleOpenSidebar={() => setOpen(true)}
+          />
         ))}
       </List>
 
@@ -112,111 +113,113 @@ export const Sidebar = () => {
   );
 };
 
-const options = [
-  "None",
-  "Atria",
-  "Callisto",
-  "Dione",
-  "Ganymede",
-  "Hangouts Call",
-  "Luna",
-  "Oberon",
-  "Phobos",
-  "Pyxis",
-  "Sedna",
-  "Titania",
-  "Triton",
-  "Umbriel",
-];
+const Item = ({ item, open, level, handleOpenSidebar }) => {
+  const [submenuOpen, setMenuOpen] = useState(false);
+  // const [menuPosition, setMenuPosition] = React.useState(null);
+  // const menuOpen = Boolean(menuPosition);
 
-const ITEM_HEIGHT = 48;
-
-const Item = ({ item }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    // setMenuPosition(event.currentTarget);
+    open ? setMenuOpen(!submenuOpen) : handleOpenSidebar();
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  // const handleClose = () => {
+  //   setMenuPosition(null);
+  // };
 
   return (
-    <div onMouseEnter={handleClick} onMouseLeave={handleClose}>
-      <Link to={item.route} className="bg-primary">
-        <img
-          alt={item.name}
-          src={process.env.PUBLIC_URL + "/pngs/sidebar/" + item.icon}
-        />
-        <p>{item.name}</p>
-      </Link>
-
-      <Menu
-        id="long-menu"
-        MenuListProps={{
-          "aria-labelledby": "long-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
-          },
-        }}
+    <div>
+      <button
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        to={item.route}
+        className="flex items-center px-[8px] h-10 w-full hover:bg-light-blue"
       >
-        {options.map((option) => (
-          <MenuItem
-            key={option}
-            selected={option === "Pyxis"}
-            onClick={handleClose}
-          >
-            {option}
-          </MenuItem>
+        <IconButton style={{ marginLeft: level * 10 }}>{item.icon}</IconButton>
+        {open && <p className="flex-1 text-start">{item.title}</p>}
+        <IconButton>
+          {item.submenu && (
+            <Fragment>
+              {submenuOpen ? (
+                <FaChevronUp className="text-lg" />
+              ) : (
+                <FaChevronDown className="text-lg" />
+              )}
+            </Fragment>
+          )}
+        </IconButton>
+      </button>
+
+      {open &&
+        submenuOpen &&
+        item.submenu &&
+        item.submenu.map((x, i) => (
+          <Item key={i} level={level + 2} item={x} open={open} />
         ))}
-      </Menu>
+
+      {/* {!open && (
+        <BasicMenu
+          anchorEl={menuPosition}
+          handleClose={handleClose}
+          open={menuOpen}
+          item={item}
+        />
+      )} */}
     </div>
   );
 };
 
-/* <ListItem
-              key={i}
-              className={`block my-1 border-l-[5px] ${
-                active === item.name
-                  ? "border-l-primary bg-[#eee]"
-                  : "border-l-transparent bg-transparent"
-              }`}
-              disablePadding
-            >
-              <ListItemButton
-                onClick={() => setActive(item.name)}
-                className={`min-h-[48px] px-10 ${
-                  open ? "justify-initial" : "justify-center"
-                }`}
-              >
-                <Box
-                  className={`min-w-0 ${
-                    open ? "mr-3" : "mr-auto"
-                  } justify-center`}
-                >
-                  <img
-                    alt={item.name}
-                    src={process.env.PUBLIC_URL + "/pngs/sidebar/" + item.icon}
-                  />
-                </Box>
+// export default function BasicMenu({ anchorEl, handleClose, open, item }) {
+//   const [openSubmenu, setOpenSubmenu] = useState(false);
+//   const [menuPosition, setMenuPosition] = React.useState(null);
 
-                {open && (
-                  <div className="flex items-center justify-start gap-3 w-full">
-                    <ListItemText
-                      primary={item.name}
-                      className={`${
-                        active === item.name
-                          ? "text-primary italic"
-                          : "text-dark-grey"
-                      }`}
-                    />
-                  </div>
-                )}
-              </ListItemButton>
-            </ListItem> */
+//   const handleCloseMenu = () => {
+//     handleClose();
+//     setOpenSubmenu(false);
+//     setMenuPosition(null);
+//   };
+
+//   return (
+//     <Fragment>
+//       {open && item.submenu && (
+//         <Menu
+//           id="basic-menu"
+//           anchorEl={anchorEl}
+//           open={open}
+//           onClose={handleCloseMenu}
+//           MenuListProps={{
+//             "aria-labelledby": "basic-button",
+//           }}
+//         >
+//           {item.submenu.map((x, i) => (
+//             <Fragment>
+//               <MenuItem
+//                 onClick={(e) => {
+//                   if (x.submenu) {
+//                     setMenuPosition(e.currentTarget);
+//                     setOpenSubmenu(true);
+//                   } else {
+//                     handleCloseMenu();
+//                   }
+//                 }}
+//               >
+//                 {x.title}
+//               </MenuItem>
+//               {openSubmenu && (
+//                 <BasicMenu
+//                   anchorEl={menuPosition}
+//                   handleClose={handleClose}
+//                   open={openSubmenu}
+//                   item={x}
+//                 />
+//               )}
+//             </Fragment>
+//           ))}
+//         </Menu>
+//       )}
+//     </Fragment>
+//   );
+// }
