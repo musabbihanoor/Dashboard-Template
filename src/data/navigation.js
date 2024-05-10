@@ -9,16 +9,34 @@ import { TbReportMoney } from "react-icons/tb";
 export const data = [
   {
     title: "Dashboard",
-    icon: <FaChartBar className="text-3xl" />,
+    icon: <FaChartBar className="text-2xl" />,
     route: "/dashboard",
   },
   {
     title: "Finance",
-    icon: <LuFileBarChart2 className="text-3xl" />,
+    icon: <LuFileBarChart2 className="text-2xl" />,
     submenu: [
       {
         title: "Accounts Receivable",
         route: "/finance/accounts-receivable",
+        submenu: [
+          {
+            title: "Accounts Receivable",
+            route: "/finance/accounts-receivable",
+          },
+          {
+            title: "Accounts Payable",
+            route: "/finance/accounts-payable",
+          },
+          {
+            title: "General Ledger",
+            route: "/finance/general-ledger",
+          },
+          {
+            title: "Budgeting",
+            route: "/finance/budgeting",
+          },
+        ],
       },
       {
         title: "Accounts Payable",
@@ -36,7 +54,7 @@ export const data = [
   },
   {
     title: "Human Resources",
-    icon: <FaPeopleGroup className="text-3xl" />,
+    icon: <FaPeopleGroup className="text-2xl" />,
     submenu: [
       {
         title: "Employee Management",
@@ -54,7 +72,7 @@ export const data = [
   },
   {
     title: "Manufacturing",
-    icon: <IoBuildOutline className="text-3xl" />,
+    icon: <IoBuildOutline className="text-2xl" />,
     submenu: [
       {
         title: "Production Planning",
@@ -68,7 +86,7 @@ export const data = [
   },
   {
     title: "Supply Chain",
-    icon: <FaRecycle className="text-3xl" />,
+    icon: <FaRecycle className="text-2xl" />,
     submenu: [
       {
         title: "Inventory Management",
@@ -86,7 +104,7 @@ export const data = [
   },
   {
     title: "Customer Relations",
-    icon: <FaPeopleArrows className="text-3xl" />,
+    icon: <FaPeopleArrows className="text-2xl" />,
     submenu: [
       {
         title: "CRM Dashboard",
@@ -104,7 +122,7 @@ export const data = [
   },
   {
     title: "Reports",
-    icon: <TbReportMoney className="text-3xl" />,
+    icon: <TbReportMoney className="text-2xl" />,
     route: "/reports",
   },
 ];

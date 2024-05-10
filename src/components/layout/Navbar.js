@@ -13,7 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import theme from "../utils/theme";
+import theme from "../../utils/theme";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";

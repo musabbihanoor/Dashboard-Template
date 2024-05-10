@@ -8,7 +8,7 @@ import Dashboard from "../pages/Dashboard";
 export const AppRouter = ({ authorize }) => {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard authorize={authorize} />} />
+      <Route path="/dashboard" element={<Dashboard authorize={authorize} />} />
     </Routes>
   );
 };

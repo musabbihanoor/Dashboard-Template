@@ -1,6 +1,6 @@
 // AlertService.js
 import React, { createContext, useContext, useState } from "react";
-import SnackbarComponent from "../components/Snackbar";
+import SnackbarComponent from "../components/layout/Snackbar";
 
 const AlertContext = createContext();
 

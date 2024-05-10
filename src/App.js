@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { AppRouter } from "./router";
-import { Layout } from "./components";
+import { Layout } from "./components/layout";
 
-import Loading from "./components/Loading";
+import Loading from "./components/layout/Loading";
 
 import "./App.css";
 

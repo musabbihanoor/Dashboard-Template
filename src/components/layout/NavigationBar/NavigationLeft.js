@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 // import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { data } from "../data/sidebar";
+import { data } from "../../../data/navigation";
 
 import { MdOutlineDashboard } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -67,7 +67,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const Sidebar = () => {
+export const NavigationLeft = () => {
   const [open, setOpen] = useState(true);
 
   const handleDrawerToggle = () => {
