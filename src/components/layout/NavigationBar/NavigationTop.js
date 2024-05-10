@@ -4,19 +4,33 @@ import { data } from "../../../data/navigation";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import { Button } from "@mui/material";
 
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const NavigationTop = () => {
+  const [show, setShow] = useState(false);
+
+  const handleToggleShow = () => setShow(!show);
+
   return (
-    <div className="w-full drop-shadow bg-white p-5">
-      <div className="flex gap-5">
-        {data.map((x, i) => (
-          <Item item={x} />
-        ))}
+    <div className="relative">
+      <div
+        className={`w-full drop-shadow bg-white ${
+          show ? "p-5" : "h-0 overflow-hidden"
+        }`}
+      >
+        <div className="flex gap-5">
+          {data.map((x, i) => (
+            <Item item={x} />
+          ))}
+        </div>
       </div>
+      <button
+        onClick={handleToggleShow}
+        className="border-2 border-grey text-xs text-grey rounded-full px-1 py-1 absolute right-5 top-[-10px] bg-white"
+      >
+        {show ? <FaChevronUp /> : <FaChevronDown />}
+      </button>
     </div>
   );
 };
